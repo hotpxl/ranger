@@ -1,6 +1,4 @@
-http = require 'http'
 fs = require 'fs'
-util = require 'util'
 Q = require 'q'
 _ = require 'lodash'
 request = require 'request'
@@ -61,7 +59,10 @@ getUserConfig = (userConfig) ->
     ret = {}
     _.map obj, (entry) ->
       i = entry[0].name
-      ret[i] = entry[1].name
+      if typeof(entry[1]) == 'string'
+        ret[i] = entry[1]
+      else
+        ret[i] = entry[1].name
     ret
 
 getUserConfigClassified = (userConfig) ->
