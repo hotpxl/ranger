@@ -102,11 +102,23 @@ generateRoutingTable = (classifiedConfig) ->
         gateway: v
     ret
 
+writeRoutingTable = (del, table) ->
+  if del
+    action = 'del'
+  else
+    action = 'add'
+  ret = ['ip -batch - <<EOF']
+  _.map table, (entry) ->
+    ret.push "route #{action} #{entry.dest} #{entry.gateway}"
+  ret.push 'EOF'
+  ret.join '\n'
+
 if require.main == module
   getUserConfigClassified './config.sexp'
   .then (u) ->
     generateRoutingTable u
   .then (res) ->
-    console.log res
+    a = writeRoutingTable false, res
+    console.log a
   .done()
 
