@@ -108,7 +108,7 @@ writeRoutingTable = (del, table) ->
     action = 'del'
   else
     action = 'add'
-  ret = ['ip -batch - <<EOF']
+  ret = ['ip -batch -force - <<EOF']
   _.map table, (entry) ->
     ret.push "route #{action} #{entry.dest} #{entry.gateway}"
   ret.push 'EOF'
