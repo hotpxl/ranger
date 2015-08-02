@@ -1,0 +1,9 @@
+{
+  "private": true,
+  "dependencies": {
+    "lodash": "",
+    "q": "",
+    "request": "",
+    "sexpression": ""
+  }
+}
