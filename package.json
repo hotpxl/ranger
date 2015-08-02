@@ -4,6 +4,7 @@
     "lodash": "",
     "q": "",
     "request": "",
-    "sexpression": ""
+    "sexpression": "",
+    "argparse": ""
   }
 }

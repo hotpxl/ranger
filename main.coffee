@@ -1,3 +1,4 @@
+#!/usr/bin/env coffee
 fs = require 'fs'
 Q = require 'q'
 _ = require 'lodash'
@@ -114,11 +115,22 @@ writeRoutingTable = (del, table) ->
   ret.join '\n'
 
 if require.main == module
-  getUserConfigClassified './config.sexp'
+  parser = new (require('argparse').ArgumentParser)(
+    descirption: 'generate routing table'
+  )
+  parser.addArgument ['-d', '--del'],
+    help: 'delete routing table'
+    action: 'storeTrue'
+  parser.addArgument ['-c', '--config'],
+    help: 'configuration file for gateways'
+    required: true
+    action: 'store'
+  args = parser.parseArgs()
+  getUserConfigClassified args.config
   .then (u) ->
     generateRoutingTable u
   .then (res) ->
-    a = writeRoutingTable false, res
-    console.log a
+    d = writeRoutingTable args.del, res
+    console.log d
   .done()
 
